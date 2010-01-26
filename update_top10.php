@@ -38,14 +38,7 @@ for($i=0; $i<$count; $i++) {
 
   echo "Update $board - $id...\n";
 
-/*    
-    // Get board id
-    $content_bbstcon = curl_get(str_replace("&amp;", "&", $urls_bbstcon[$i]));
-
-    if (preg_match("|tconWriter\('.*',(\d+),|m", $content_bbstcon, $m)) {
-        $board_id = $m[1];
- */        
-  $board_id = $board_data[$board];
+  $board_id = get_board_id($board, $urls_bbstcon[$i]);
   if ($board_id) {
     $url = "http://www.newsmth.net/bbscon.php?bid=$board_id&id=$id";
 
@@ -100,15 +93,30 @@ for($i=0; $i<$count; $i++) {
   } else {
     echo "FAILED to get board_id for board: $board\n";
   }     
-/*    
-    } else {
-        echo "FAILED!\n";
-    }
- */
 } // for
 
 fclose($list_fp);
 
 echo "\n";
+
+function get_board_id($board_name, $bbstcon_url) {
+  global $board_data;
+  
+  $board_id = $board_data[$board];
+  
+  if (!$board_id) {
+    echo "The board_data.txt need to update!";
+
+    $content_bbstcon = curl_get(str_replace("&amp;", "&", $urls_bbstcon[$i]));
+    
+    if (preg_match("|tconWriter\('.*',(\d+),|m", $content_bbstcon, $m)) {
+      $board_id = $m[1];
+    } else {
+      return null;
+    }
+  }
+
+  return $board_id;
+}
 
 ?>
