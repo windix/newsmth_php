@@ -75,7 +75,6 @@ a:link, a:visited {
 
 $per_page = 10;
 
-$show_pic = @$_GET['show_pic'] == "true";
 $staronly = @$_GET['staronly'] == "true";
 $page_no = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -135,11 +134,7 @@ for($i=$from; $i>=$to; $i--) {
         $att_files = glob("att/{$filename}-*");
       
         foreach($att_files as $att_file) {
-            if ($show_pic) {
-                echo "<img src='$att_file' /><br />";
-            } else {
-                echo "<a href='$att_file'>[attachment ".($j+1)."]</a> "; 
-            }
+            echo "<a href='$att_file'>[{$att_file}]</a> "; 
         }
     }
 }
