@@ -116,7 +116,8 @@ for($i=$from; $i>=$to; $i--) {
     $url = "http://www.newsmth.net/bbstcon.php?board=$board&gid=$id";
 
     $post = file_get_contents("post/".$filename);
-    
+    if (strlen($post) == 0) continue;
+
     preg_match("|发信人: ([\w\d]+) \((.*)\), 信区: (\w+)<br />标  题: (.*)<br />|U", $post, $m);
 
     $search_url = "http://www.newsmth.net/bbsbfind.php?q=1&board={$m[3]}&title=".urlencode(iconv("utf-8", "gb2312", $m[4]))."&title2=&title3=&userid=&dt=1000";
@@ -129,14 +130,17 @@ for($i=$from; $i>=$to; $i--) {
 
     echo "<div class='post'>$post";
    
-    echo "<div class='att'>";
     if ($att_count > 0) {
+        echo "<div class='att'>";
         $att_files = glob("att/{$filename}-*");
       
         foreach($att_files as $att_file) {
             echo "<a href='$att_file'>[{$att_file}]</a> "; 
         }
+        echo "</div>";
     }
+
+    echo "</div>\n";
 }
 
 show_page_nav($page_no, $total_page, $staronly);
