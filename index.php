@@ -131,18 +131,17 @@ for($i=$from; $i>=$to; $i--) {
     echo "<div class='post'>$post";
    
     echo "<div class='att'>";
-    for($j=0; $j<$att_count; $j++) {
-        $att_file = "att/$filename-".($j+1).".jpg";
-        
-        if ($show_pic) {
-            echo "<img src='$att_file' /><br />";
-        } else {
-            echo "<a href='$att_file'>[attachment ".($j+1)."]</a> "; 
+    if ($att_count > 0) {
+        $att_files = glob("att/{$filename}-*");
+      
+        foreach($att_files as $att_file) {
+            if ($show_pic) {
+                echo "<img src='$att_file' /><br />";
+            } else {
+                echo "<a href='$att_file'>[attachment ".($j+1)."]</a> "; 
+            }
         }
     }
-    echo "</div>";
-
-    echo "</div>";
 }
 
 show_page_nav($page_no, $total_page, $staronly);
