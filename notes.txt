@@ -1,0 +1,16 @@
+http://www.newsmth.net/bbsbfind.php?q=1&board=Oversea&title=%C4%C7%CC%EC%C5%F6%B5%BD%D2%BB%B8%F6%CC%A8%CD%E5JJ&title2=&title3=&userid=&dt=7
+
+q
+board	版面名称
+title	标题含有
+title2	标题含有 AND
+title3	标题不含
+userid	作者帐号
+dt	时间范围
+mg	精华文章
+ag	带附件文章
+og	不含跟贴
+
+39,44,49 * * * * cd /home/wfeng/websites/windix.net/htdocs/lab/smth;
+/usr/bin/php update_top10.php >> update_log 2>/dev/null
+
