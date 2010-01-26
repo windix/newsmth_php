@@ -54,7 +54,6 @@ a:link, a:visited {
 
 $per_page = 10;
 
-$show_pic = @$_GET['show_pic'] == "true";
 $page_no = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $list = file("list.txt");
@@ -75,25 +74,25 @@ for($i=$from; $i>=$to; $i--) {
     list($board, $id) = explode("-", $filename);
 
     $url = "http://www.newsmth.net/bbstcon.php?board=$board&gid=$id";
-    echo "<div class='titlebar'>[".($i+1)."] Archived on ".date("Y-m-d H:i:s", $ts)."</div>";
 
     $post = file_get_contents("post/".$filename);
+    if (strlen($post) == 0) continue;
+    
+    echo "<div class='titlebar'>[".($i+1)."] Archived on ".date("Y-m-d H:i:s", $ts)."</div>";
     
     $post = preg_replace("|发信人: ([\w\d]+) \((.*)\), 信区: (\w+)<br />标  题: (.*)<br />|Ue", "'发信人: <a href=\"http://www.newsmth.net/bbsqry.php?userid=$1\">$1 ($2)</a>, 信区: <a href=\"http://www.newsmth.net/bbsdoc.php?board=$3\">$3</a><br />标  题: <a href=\"$url\">$4</a> <a href=\"http://www.newsmth.net/bbsbfind.php?q=1&board=$3&title='.urlencode(iconv(\"utf-8\", \"gb2312\", \"$4\")).'&title2=&title3=&userid=&dt=7\">[Search]</a><br />'", $post, 1);
 
     echo "<div class='post'>$post";
    
-    echo "<div class='att'>";
-    for($j=0; $j<$att_count; $j++) {
-        $att_file = "att/$filename-".($j+1).".jpg";
-        
-        if ($show_pic) {
-            echo "<img src='$att_file' /><br />";
-        } else {
-            echo "<a href='$att_file'>[attachment ".($j+1)."]</a> "; 
+    if ($att_count > 0) {
+        echo "<div class='att'>";
+        $att_files = glob("att/{$filename}-*");
+      
+        foreach($att_files as $att_file) {
+            echo "<a href='$att_file'>[{$att_file}]</a> "; 
         }
+        echo "</div>";
     }
-    echo "</div>";
 
     echo "</div>";
 }
