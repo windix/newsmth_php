@@ -1,0 +1,1 @@
+39,44,49 * * * * cd /var/www/lab.ozdiy.com/smth && /usr/bin/php update_top10.php >> update_log 2>/dev/null

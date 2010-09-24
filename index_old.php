@@ -85,6 +85,7 @@ for($i=$from; $i>=$to; $i--) {
     echo "<div class='post'>$post";
    
     if ($att_count > 0) {
+        echo "<br />".$att_count." att/{$filename}-*";
         echo "<div class='att'>";
         $att_files = glob("att/{$filename}-*");
       
