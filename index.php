@@ -132,7 +132,10 @@ for($i=$from; $i>=$to; $i--) {
    
     if ($att_count > 0) {
         echo "<div class='att'>";
+        echo "<a href='att.php?filename=$filename' target='_blank'>[Open All]</a> - ";
+
         $att_files = glob("att/{$filename}-*");
+        natsort($att_files);
       
         foreach($att_files as $att_file) {
             echo "<a href='$att_file'>[{$att_file}]</a> "; 
@@ -162,7 +165,7 @@ function show_page_nav($page_no, $total_page, $staronly) {
     $next_link = ($page_no == $total_page) ? "Next" : "<a href='?page=".($page_no+1)."{$staronly_url}'>Next</a>";
     $tail_link = ($page_no == $total_page) ? "Last" : "<a href='?page=$total_page{$staronly_url}'>Last</a>";
     
-    $last_update = date("Y-m-d H:i:s", filemtime("./update_log"));
+    $last_update = date("Y-m-d H:i:s", filemtime("./update.log"));
 
     echo "<div class='pagenav'><span style=\"float:right;\"><strong> NewSMTH Top 10 Archives </strong>[Last update: $last_update]</span> [$head_link] [$prev_link] $page_no of $total_page [$next_link] [$tail_link] [<a href='$staronly_toggle'><img style='border:0' src='$staronly_toggle_icon' /></a>]</div>";   
 }
