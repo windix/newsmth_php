@@ -1,4 +1,9 @@
 <?php
 require "star.php";
-print_r(load_starlist());
+$arr = load_starlist();
+
+foreach ($arr as $id) {
+  // star is zero based
+  echo ($id + 1)."\n";
+}
 ?>
